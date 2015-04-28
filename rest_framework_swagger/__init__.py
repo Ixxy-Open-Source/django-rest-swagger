@@ -12,6 +12,7 @@ DEFAULT_SWAGGER_SETTINGS = {
     'permission_denied_handler': None,
     'template_path': 'rest_framework_swagger/index.html',
     'doc_expansion': 'none',
+    'api_full_uri': 'http://127.0.0.1:8000/',
 }
 
 try:
