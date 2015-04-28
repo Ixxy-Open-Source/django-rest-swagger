@@ -404,6 +404,9 @@ class BaseMethodIntrospector(object):
             if f['type'] == f['format']:
                 del f['format']
 
+            if f['type'] in ["date-time", "choice", "uuid"]:
+                f['type'], f['format'] = f['format'], f['type']
+
             # defaultValue of null is not allowed, it is specific to type
             if f['defaultValue'] is None:
                 del f['defaultValue']
@@ -453,7 +456,7 @@ def get_data_type(field):
     elif isinstance(field, fields.DateField):
         return 'date'
     elif isinstance(field, fields.DateTimeField):
-        return 'datetime'
+        return 'date-time'
     elif isinstance(field, fields.TimeField):
         return 'time'
     elif isinstance(field, fields.IntegerField):
@@ -470,6 +473,8 @@ def get_data_type(field):
         return 'string'
     elif rest_framework.VERSION >= '3.0.0' and isinstance(field, fields.HiddenField):
         return 'hidden'
+    elif isinstance(field, fields.UUIDField):
+        return 'uuid'
     else:
         return 'string'
 
