@@ -17,6 +17,7 @@ from django.utils.encoding import smart_text
 
 import rest_framework
 from rest_framework import viewsets
+from rest_framework.request import Request
 from rest_framework.compat import apply_markdown
 from rest_framework.utils import formatting
 from django.utils import six
@@ -204,9 +205,12 @@ class BaseMethodIntrospector(object):
             view.kwargs = dict()
         if hasattr(self.parent.pattern, 'default_args'):
             view.kwargs.update(self.parent.pattern.default_args)
-        view.request = HttpRequest()
-        view.request.user = AnonymousUser()
-        view.request.method = self.method
+
+        request_django = HttpRequest()
+        request_django.user = AnonymousUser()
+        request_django.method = self.method
+
+        view.request = Request(request_django)
         return view
 
     def get_serializer_class(self):
@@ -611,7 +615,7 @@ class ViewSetMethodIntrospector(BaseMethodIntrospector):
         view = super(ViewSetMethodIntrospector, self).create_view()
         if not hasattr(view, 'action'):
             setattr(view, 'action', self.method)
-        view.request.method = self.http_method
+        view.request._request.method = self.http_method
         return view
 
     def build_query_parameters(self):
