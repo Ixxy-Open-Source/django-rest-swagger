@@ -15,9 +15,10 @@ class Command(BaseCommand):
 
     def handle(self, path=None, *args, **options):
         if path is None:
-            print self.get_resource_listing()
+            data = self.get_resource_listing()
         else:
-            print json.dumps(self.get_api_declaration(path), indent=3)
+            data = self.get_api_declaration(path)
+        print json.dumps(data, indent=3)
 
     def get_resource_listing(self):
         apis = self.get_apis()
