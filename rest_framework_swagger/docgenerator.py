@@ -127,7 +127,7 @@ class DocumentationGenerator(object):
 
             models[w_name] = {
                 'id': w_name,
-                'required': [i for i in data['required'] if i in w_properties.keys()],
+                'required': [i for i in data['required'] if (i in w_properties.keys() and w_properties[i]['required'])],
                 'properties': w_properties,
             }
 
@@ -140,7 +140,7 @@ class DocumentationGenerator(object):
 
             models[r_name] = {
                 'id': r_name,
-                'required': [i for i in r_properties.keys()],
+                'required': [i for i in r_properties.keys() if r_properties[i]['required']],
                 'properties': r_properties,
             }
 
