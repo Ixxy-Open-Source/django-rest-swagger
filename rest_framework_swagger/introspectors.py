@@ -408,7 +408,7 @@ class BaseMethodIntrospector(object):
             if f['type'] == f['format']:
                 del f['format']
 
-            if f['type'] in ["date-time", "choice", "uuid"]:
+            if f['type'] in ["date-time", "choice", "uuid", "email", "slug"]:
                 f['type'], f['format'] = f['format'], f['type']
 
             # defaultValue of null is not allowed, it is specific to type
