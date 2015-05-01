@@ -337,7 +337,8 @@ class DocumentationGenerator(object):
                 if getattr(field, 'write_only', False):
                     field_serializer = "Write{}".format(field_serializer)
 
-                f['type'] = field_serializer
+                del f['type']
+                f['$ref'] = field_serializer
                 if rest_framework.VERSION < '3.0.0':
                     has_many = field.many
                 else:
@@ -345,6 +346,7 @@ class DocumentationGenerator(object):
                     has_many = isinstance(field, ListSerializer)
                 if has_many:
                     f['type'] = 'array'
+                    del f['$ref']
                     if data_type in BaseMethodIntrospector.PRIMITIVES:
                         f['items'] = {'type': data_type}
                     else:
