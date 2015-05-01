@@ -88,6 +88,8 @@ class DocumentationGenerator(object):
 
             if parameters:
                 operation['parameters'] = parameters
+            else:
+                operation['parameters'] = []
 
             if response_messages:
                 operation['responseMessages'] = response_messages
