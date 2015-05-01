@@ -349,7 +349,8 @@ class DocumentationGenerator(object):
                 if has_many:
                     f['type'] = 'array'
                     del f['$ref']
-                    if data_type in BaseMethodIntrospector.PRIMITIVES:
+                    primitive_array = False and data_type in BaseMethodIntrospector.PRIMITIVES
+                    if primitive_array:
                         f['items'] = {'type': data_type}
                     else:
                         f['items'] = {'$ref': field_serializer}
