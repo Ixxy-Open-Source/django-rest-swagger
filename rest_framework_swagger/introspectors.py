@@ -318,6 +318,10 @@ class BaseMethodIntrospector(object):
         return get_view_description(getattr(self.callback, method))
 
     def build_body_parameters(self):
+        parser = self.get_yaml_parser()
+        if parser.should_omit_serializer():
+            return
+
         serializer = self.get_request_serializer_class()
         serializer_name = IntrospectorHelper.get_serializer_name(serializer)
 
@@ -372,6 +376,10 @@ class BaseMethodIntrospector(object):
         """
         Builds form parameters from the serializer class
         """
+        parser = self.get_yaml_parser()
+        if parser.should_omit_serializer():
+            return
+
         data = []
         serializer = self.get_request_serializer_class()
 
