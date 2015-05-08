@@ -164,7 +164,6 @@ class DocumentationGenerator(object):
 
         Serializer might be ignored if explicitly told in docstring
         """
-        serializer = method_inspector.get_response_serializer_class()
         doc_parser = method_inspector.get_yaml_parser()
 
         if doc_parser.get_response_type() is not None:
@@ -172,7 +171,9 @@ class DocumentationGenerator(object):
             return None
 
         if doc_parser.should_omit_serializer():
-            serializer = None
+            return None
+
+        serializer = method_inspector.get_response_serializer_class()
 
         return serializer
 
