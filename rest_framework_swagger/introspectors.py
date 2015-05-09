@@ -20,6 +20,7 @@ from rest_framework import viewsets
 from rest_framework.request import Request
 from rest_framework.compat import apply_markdown
 from rest_framework.utils import formatting
+from rest_framework.serializers import BaseSerializer
 from django.utils import six
 
 
@@ -401,6 +402,14 @@ class BaseMethodIntrospector(object):
             data_format = 'string'
             if data_type in self.PRIMITIVES:
                 data_format = self.PRIMITIVES.get(data_type)[0]
+
+            # Support for complex types
+            if isinstance(field, BaseSerializer):
+                field_serializer = IntrospectorHelper.get_serializer_name(field)
+
+                if getattr(field, 'write_only', False):
+                    field_serializer = "Write{}".format(field_serializer)
+                data_type = field_serializer
 
             f = {
                 'paramType': 'form',
