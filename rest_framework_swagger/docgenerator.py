@@ -306,7 +306,7 @@ class DocumentationGenerator(object):
                 'readOnly': getattr(field, 'read_only', None),
             }
 
-            if f['type'] in ["date-time", "choice", "uuid", "email", "slug"]:
+            if f['type'] in ["date-time", "choice", "uuid", "email", "slug", "date"]:
                 f['type'], f['format'] = f['format'], f['type']
 
             # Swagger type is a primitive, format is more specific
