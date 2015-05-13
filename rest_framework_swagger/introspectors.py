@@ -406,9 +406,8 @@ class BaseMethodIntrospector(object):
             # Support for complex types
             if isinstance(field, BaseSerializer):
                 field_serializer = IntrospectorHelper.get_serializer_name(field)
+                field_serializer = "Write{}".format(field_serializer)
 
-                if getattr(field, 'write_only', False):
-                    field_serializer = "Write{}".format(field_serializer)
                 data_type = field_serializer
 
             f = {
@@ -425,7 +424,7 @@ class BaseMethodIntrospector(object):
             if f['type'] == f['format']:
                 del f['format']
 
-            if f['type'] in ["date-time", "choice", "uuid", "email", "slug", "date"]:
+            if f['type'] in ["date-time", "choice", "uuid", "email", "slug", "date", "time"]:
                 f['type'], f['format'] = f['format'], f['type']
 
             # defaultValue of null is not allowed, it is specific to type

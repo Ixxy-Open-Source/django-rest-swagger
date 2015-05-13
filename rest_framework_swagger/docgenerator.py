@@ -140,6 +140,9 @@ class DocumentationGenerator(object):
             r_properties = OrderedDict((k, v) for k, v in data['fields'].items()
                                        if k not in data['write_only'])
 
+            for v in r_properties.itervalues():
+                v['required'] = True
+
             models[r_name] = {
                 'id': r_name,
                 'required': [i for i in r_properties.keys()],
@@ -306,7 +309,7 @@ class DocumentationGenerator(object):
                 'readOnly': getattr(field, 'read_only', None),
             }
 
-            if f['type'] in ["date-time", "choice", "uuid", "email", "slug", "date"]:
+            if f['type'] in ["date-time", "choice", "uuid", "email", "slug", "date", "time"]:
                 f['type'], f['format'] = f['format'], f['type']
 
             # Swagger type is a primitive, format is more specific
