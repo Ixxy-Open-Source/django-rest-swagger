@@ -142,7 +142,7 @@ class DocumentationGenerator(object):
 
             models[r_name] = {
                 'id': r_name,
-                'required': [i for i in r_properties.keys() if r_properties[i]['required']],
+                'required': [i for i in r_properties.keys()],
                 'properties': r_properties,
             }
 
