@@ -198,6 +198,10 @@ class BaseMethodIntrospector(object):
             mock_view = parser.get_view_mocker(self.callback)
             view = mock_view(view)
             if view is not None:
+                if '{' in self.path:
+                    lookup_url_kwarg = view.lookup_url_kwarg or view.lookup_field
+                    view.kwargs[lookup_url_kwarg] = ''
+                    view._docs_gen = True
                 return view.get_serializer_class()
 
     def create_view(self):
